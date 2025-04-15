@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { logger } from './middlewares/logger.js';
 import { getEnvVar } from './utils/getEnvVar.js';
 import contactsRouter from './routers/contacts.js';
 
@@ -11,6 +12,7 @@ export const startServer = () => {
 
   app.use(cors());
   app.use(express.json());
+  app.use(logger);
 
   app.use('/contacts', contactsRouter);
 
