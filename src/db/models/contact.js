@@ -15,7 +15,6 @@ const contactSchema = new Schema(
     email: {
       type: String,
     },
-
     isFavourite: {
       type: Boolean,
       default: false,
@@ -26,17 +25,29 @@ const contactSchema = new Schema(
       required: true,
       default: typeList[2],
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  },
+  { versionKey: false, timestamps: true },
 );
+
 contactSchema.post('save', handleSaveError);
 
 contactSchema.pre('findOneAndUpdate', setUpdateSettings);
 
 contactSchema.post('findOneAndUpdate', handleSaveError);
 
-const ContactCollection = model('contact', contactSchema);
-export default ContactCollection;
+export const contactSortFields = [
+  'name',
+  'phoneNumber',
+  'email',
+  'isFavourite',
+  'contactType',
+];
+
+export const ContactsCollection = model('contacts', contactSchema);
+
+export default ContactsCollection;
