@@ -1,4 +1,4 @@
-import ContactsCollection from '../db/models/contact.js';
+import ContactsCollection from '../db/models/Contact.js';
 import { calcPaginationData } from '../utils/calcPaginationData.js';
 import { sortList } from '../constants/index.js';
 
@@ -11,8 +11,11 @@ export const getContacts = async ({
 }) => {
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = ContactsCollection.find();
+  const contactsQuery = ContactsCollection.find({ userId: filters.userId });
 
+  if (filters.userId) {
+    contactsQuery.where('userId').equals(filters.userId);
+  }
   if (filters.contactType) {
     contactsQuery.where('contactType').equals(filters.contactType);
   }
@@ -27,7 +30,9 @@ export const getContacts = async ({
     .sort({ [sortBy]: sortOrder })
     .exec();
 
-  const countQuery = ContactsCollection.find();
+  const countQuery = ContactsCollection.find({
+    userId: filters.userId,
+  });
 
   if (filters.contactType) {
     countQuery.where('contactType').equals(filters.contactType);
@@ -47,9 +52,9 @@ export const getContacts = async ({
   };
 };
 
-export const getContactsById = async (id) => {
+export const getContactsById = async ({ contactId, userId }) => {
   try {
-    return await ContactsCollection.findOne({ _id: id });
+    return await ContactsCollection.findOne({ _id: contactId, userId });
   } catch (error) {
     throw new Error(error);
   }
@@ -59,10 +64,13 @@ export const addContacts = async (payload) => {
   return await ContactsCollection.create(payload);
 };
 
-export const updateContacts = async (_id, payload) => {
-  return ContactsCollection.findOneAndUpdate({ _id }, payload, { new: true });
+export const updateContacts = async (_id, payload, userId) => {
+  return ContactsCollection.findOneAndUpdate({ _id, userId }, payload, {
+    new: true,
+    runValidators: true,
+  });
 };
 
-export const deleteContactsById = async (_id) => {
-  return ContactsCollection.findOneAndDelete({ _id });
+export const deleteContactsById = async (_id, userId) => {
+  return ContactsCollection.findOneAndDelete({ _id, userId });
 };
