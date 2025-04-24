@@ -9,13 +9,17 @@ import {
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/filters/parseFilterParams.js';
-import { contactSortFields } from '../../db/models/Contact.js';
+import { contactSortFields } from '../db/models/Contact.js';
+
 export const getContactsController = async (req, res) => {
   try {
     const paginationParams = parsePaginationParams(req.query);
     const sortParams = parseSortParams(req.query, contactSortFields);
     const filter = parseFilterParams(req.query);
     filter.userId = req.user._id;
+    // console.log('Pagination Params:', paginationParams);
+    // console.log('Sort Params:', sortParams);
+    // console.log('Filter Params:', filter);
 
     const data = await getContacts({
       ...paginationParams,
