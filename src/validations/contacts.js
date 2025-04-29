@@ -31,6 +31,7 @@ export const contactAddSchema = Joi.object({
       'string.max': 'ContactType should have at most {#limit} characters',
       'any.required': 'ContactType is required',
     }),
+  photo: Joi.string().optional(),
 });
 
 export const contactUpdateSchema = Joi.object({
@@ -39,4 +40,5 @@ export const contactUpdateSchema = Joi.object({
   email: Joi.string(),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid(...typeList),
+  photo: Joi.string().optional(),
 });
