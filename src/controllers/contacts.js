@@ -89,6 +89,9 @@ export const patchContactsController = async (req, res) => {
   const photo = req.file;
   let photoUrl;
 
+  console.log('Updating contact with ID:', contactId);
+  console.log('User ID:', userId);
+
   if (photo) {
     if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
       photoUrl = await saveFileToCloudinary(photo);
