@@ -1,0 +1,31 @@
+tags:
+  - Auth
+summery: Refresh Users Session
+operationId: refreshUsersSession
+description: 'Refresh Users Session in the Application'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Refresh token
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully refreshed a session!'
+            data:
+              type: object
+              example:
+                accessToken: F0bHemvooANGkk37QXkAmIsHKwdUFEdC1FZe10+g
+'401':
+$ref: '../../../components/responses/401.yaml'
