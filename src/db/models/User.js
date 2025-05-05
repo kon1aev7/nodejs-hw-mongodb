@@ -18,18 +18,23 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    // verify: {
+    //   type: Boolean,
+    //   default: false,
+    //   required: true,
+    // },
   },
   {
     versionKey: false,
     timestamps: true,
-    toJSON: {
-      transform(doc, ret) {
-        delete ret.password;
-        return ret;
-      },
-    },
   },
 );
+
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 userSchema.post('save', handleSaveError);
 

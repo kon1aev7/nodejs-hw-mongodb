@@ -8,7 +8,11 @@ export const validateBody = (schema) => {
       });
       next();
     } catch (error) {
-      next(createHttpError(400, error.message));
+      next(
+        createHttpError(400, 'Bad Request', {
+          errors: error.details,
+        }),
+      );
     }
   };
   return func;

@@ -1,4 +1,4 @@
-import ContactsCollection from '../db/models/contact.js';
+import ContactsCollection from '../db/models/Contact.js';
 import { calcPaginationData } from '../utils/calcPaginationData.js';
 import { sortList } from '../constants/index.js';
 
@@ -64,11 +64,27 @@ export const addContacts = async (payload) => {
   return await ContactsCollection.create(payload);
 };
 
-export const updateContacts = async (_id, payload, userId) => {
-  return ContactsCollection.findOneAndUpdate({ _id, userId }, payload, {
-    new: true,
-    runValidators: true,
-  });
+export const updateContacts = async (
+  { contactId, userId },
+  payload,
+  options = {},
+) => {
+  const { upsert = false } = options;
+  const rawResult = await ContactsCollection.findOneAndUpdate(
+    { _id: contactId, userId },
+    payload,
+    {
+      upsert,
+      includeResultMetadata: true,
+    },
+  );
+
+  if (!rawResult || !rawResult.value) return null;
+
+  return {
+    data: rawResult.value,
+    isNew: Boolean(rawResult.lastErrorObject.upserted),
+  };
 };
 
 export const deleteContactsById = async (_id, userId) => {

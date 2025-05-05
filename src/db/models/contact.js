@@ -30,7 +30,12 @@ const contactSchema = new Schema(
       ref: 'user',
       required: true,
     },
-    photo: { type: String },
+    // posterUrl: {
+    //   type: String,
+    //   required: false,
+    //   default: null,
+    // },
+    photo: { type: String, required: false, default: null },
   },
   { versionKey: false, timestamps: true },
 );
