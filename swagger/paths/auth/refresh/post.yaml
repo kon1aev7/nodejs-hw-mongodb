@@ -18,11 +18,11 @@ requestBody:
           name:
             description: 'User name'
             type: string
-            example: 'Iryna'
+            example: 'Dmytro'
           email:
             description: 'User email'
             type: string
-            example: 'ira_aleksandrova@ukr.net'
+            example: 'konyaevd1995@gmail.com'
           password:
             description: 'User password'
             type: string
