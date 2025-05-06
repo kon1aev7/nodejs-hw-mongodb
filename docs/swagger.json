@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-lmah.onrender.com"
+      "url": "https://nodejs-hw-mongodb-7-unb5.onrender.com"
     }
   ],
   "tags": [
@@ -710,12 +710,12 @@
                   "name": {
                     "description": "User name",
                     "type": "string",
-                    "example": "Iryna"
+                    "example": "Dmytro"
                   },
                   "email": {
                     "description": "User email",
                     "type": "string",
-                    "example": "ira_aleksandrova@ukr.net"
+                    "example": "konyaevd1995@gmail.com"
                   },
                   "password": {
                     "description": "User password",
